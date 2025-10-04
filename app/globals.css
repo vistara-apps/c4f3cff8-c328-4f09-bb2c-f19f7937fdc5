@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Motivational Theme - Energetic Purple to Pink Gradient */
+  --color-bg: hsl(240, 10%, 4%);
+  --color-fg: hsl(0, 0%, 98%);
+  --color-accent: hsl(142, 76%, 36%);
+  --color-primary: hsl(262, 83%, 58%);
+  --color-surface: hsl(240, 6%, 10%);
+  --color-error: hsl(0, 72%, 51%);
+  --color-warning: hsl(38, 92%, 50%);
+  --color-text-muted: hsl(0, 0%, 65%);
+  --color-accent-light: hsl(142, 76%, 50%);
+  --color-primary-light: hsl(262, 83%, 70%);
+  --color-surface-light: hsl(240, 5%, 15%);
+}
+
+@layer base {
+  * {
+    @apply border-gray-700;
+  }
+  
+  body {
+    @apply bg-bg text-fg;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-surface bg-opacity-40 backdrop-blur-xl border border-white border-opacity-10 rounded-lg;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary via-pink-500 to-accent bg-clip-text text-transparent;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary to-pink-500 text-white px-6 py-3 rounded-lg font-medium hover:from-primary-light hover:to-pink-600 transition-all duration-200 shadow-lg hover:shadow-glow;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary px-6 py-3 rounded-lg font-medium hover:bg-primary hover:text-white transition-all duration-200;
+  }
+
+  .streak-glow {
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 1;
+      box-shadow: 0 0 20px hsla(262, 83%, 58%, 0.5);
+    }
+    50% {
+      opacity: 0.8;
+      box-shadow: 0 0 40px hsla(262, 83%, 58%, 0.8);
+    }
+  }
+
+  .slide-up {
+    animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
