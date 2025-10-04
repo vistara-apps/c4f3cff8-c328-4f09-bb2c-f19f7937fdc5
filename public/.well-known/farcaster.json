@@ -1,0 +1,30 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "frame": {
+    "version": "1",
+    "name": "Momentum",
+    "subtitle": "Built with Zara",
+    "description": "Momentum is a Base Mini App built with Zara.",
+    "iconUrl": "https://0co.to/images/zara-2.png",
+    "homeUrl": "https://c4f3cff8c3284f09bb2cf19f7937fdc5-y8bz.vercel.app",
+    "splashImageUrl": "https://c4f3cff8c3284f09bb2cf19f7937fdc5-y8bz.vercel.app/splash.png",
+    "splashBackgroundColor": "#000000",
+    "heroImageUrl": "https://c4f3cff8c3284f09bb2cf19f7937fdc5-y8bz.vercel.app/image.png",
+    "tagline": "Momentum",
+    "screenshotUrls": [
+      "https://c4f3cff8c3284f09bb2cf19f7937fdc5-y8bz.vercel.app/screenshot.png",
+      "https://c4f3cff8c3284f09bb2cf19f7937fdc5-y8bz.vercel.app/screenshot.png"
+    ],
+    "primaryCategory": "social",
+    "tags": [
+      "base",
+      "miniapp",
+      "onchainkit"
+    ],
+    "webhookUrl": "https://c4f3cff8c3284f09bb2cf19f7937fdc5-y8bz.vercel.app/api/webhook"
+  }
+}
