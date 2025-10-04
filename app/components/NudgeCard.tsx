@@ -1,14 +1,76 @@
 'use client';
 
+import { useState } from 'react';
 import { Lock } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { usePayments } from '@/hooks/usePayments';
 
 interface NudgeCardProps {
   message: string;
   variant?: 'default' | 'premium';
   isPremium?: boolean;
+  goalId?: string;
+  onProgressLogged?: () => void;
 }
 
-export function NudgeCard({ message, variant = 'default', isPremium = false }: NudgeCardProps) {
+export function NudgeCard({
+  message,
+  variant = 'default',
+  isPremium = false,
+  goalId,
+  onProgressLogged
+}: NudgeCardProps) {
+  const { user } = useAuth();
+  const { processPayment, unlockWithStreak, loading: paymentLoading } = usePayments();
+  const [loading, setLoading] = useState(false);
+
+  const handleProgressLog = async (isCheckIn: boolean) => {
+    if (!user || !goalId) return;
+
+    setLoading(true);
+    try {
+      const response = await fetch('/api/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.fid,
+          goalId,
+          isCheckIn,
+        }),
+      });
+
+      if (response.ok) {
+        onProgressLogged?.();
+      }
+    } catch (error) {
+      console.error('Failed to log progress:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUnlock = async (method: 'payment' | 'streak') => {
+    if (!user) return;
+
+    if (method === 'streak') {
+      const success = await unlockWithStreak(user.fid, 'premium_pack_1', 7);
+      if (success) {
+        onProgressLogged?.();
+      }
+    } else {
+      const result = await processPayment({
+        userId: user.fid,
+        amount: '0.0005',
+        description: 'Unlock Premium Motivation Pack',
+        itemId: 'premium_pack_1',
+      });
+
+      if (result.success) {
+        onProgressLogged?.();
+      }
+    }
+  };
+
   if (variant === 'premium' && isPremium) {
     return (
       <div className="glass-card p-6 relative overflow-hidden">
@@ -20,9 +82,22 @@ export function NudgeCard({ message, variant = 'default', isPremium = false }: N
             <p className="text-text-muted text-sm mb-4">
               Unlock exclusive motivational content packs to level up your game.
             </p>
-            <button className="btn-primary text-sm">
-              Unlock for 0.0005 ETH
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleUnlock('streak')}
+                disabled={paymentLoading}
+                className="btn-primary text-sm flex-1"
+              >
+                Unlock with 7-Day Streak
+              </button>
+              <button
+                onClick={() => handleUnlock('payment')}
+                disabled={paymentLoading}
+                className="btn-outline text-sm flex-1"
+              >
+                Buy for 0.0005 ETH
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -41,8 +116,20 @@ export function NudgeCard({ message, variant = 'default', isPremium = false }: N
         </div>
       </div>
       <div className="flex gap-2">
-        <button className="btn-primary flex-1">I Did It! ✓</button>
-        <button className="btn-outline flex-1">Working On It</button>
+        <button
+          onClick={() => handleProgressLog(true)}
+          disabled={loading}
+          className="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {loading ? 'Logging...' : 'I Did It! ✓'}
+        </button>
+        <button
+          onClick={() => handleProgressLog(false)}
+          disabled={loading}
+          className="btn-outline flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Working On It
+        </button>
       </div>
     </div>
   );

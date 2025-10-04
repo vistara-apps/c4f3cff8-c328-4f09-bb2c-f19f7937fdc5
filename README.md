@@ -1,69 +1,197 @@
-# Momentum - Your Pocket Cheerleader
+# Momentum - Context-Aware Motivation App
 
-A context-aware motivation app built as a Base Mini App that sends personalized nudges, tracks streaks, and connects you with accountability peers.
+A Base Mini App that provides personalized motivation through AI-powered nudges, streak tracking, and accountability communities.
 
-## Features
+## 🚀 Features
 
-- 🔥 **Streak Tracking**: Visual streak counter with milestone celebrations
-- 💪 **Context-Aware Nudges**: AI-powered motivational messages at optimal times
-- 🎯 **Goal Progress**: Track multiple goals with visual progress indicators
-- 👥 **Accountability Pods**: Small peer groups for mutual support
-- 😊 **Mood Check-Ins**: Quick emotional state tracking
-- 💎 **Premium Content**: Unlock motivational packs via micro-transactions
+### Core Features
+- **Context-Aware Motivation Engine**: AI-powered system that analyzes user mood, goals, and activity patterns to deliver personalized motivational messages
+- **Goal-Linked Micro-Nudges**: Users set goals and receive targeted prompts tied to their specific objectives
+- **Accountability Micro-Communities**: Algorithm matches users into small pods (3-5 members) for daily win-sharing and support
+- **Streaks-to-Rewards System**: Gamified consistency tracker with milestone unlocks and premium content
+- **In-Frame Quick Actions**: One-tap mood check-ins, progress logging, and win sharing
 
-## Tech Stack
+### Technical Features
+- **Farcaster Integration**: Built as a MiniApp with wallet-less authentication via FID
+- **AI-Powered Content**: OpenAI GPT-4 integration for personalized motivation generation
+- **Micro-Transactions**: x402 protocol support for frictionless payments (0.0001-0.001 ETH)
+- **Smart Notifications**: Context-aware push notifications respecting user quiet hours
+- **Pod Matching**: Intelligent algorithm for creating compatible accountability groups
 
-- **Framework**: Next.js 15 with App Router
-- **Blockchain**: Base L2 via OnchainKit
-- **Identity**: Farcaster MiniKit SDK
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 14 with TypeScript
 - **Styling**: Tailwind CSS with custom design system
-- **Database**: Upstash Redis (recommended)
+- **Database**: Redis for data persistence
+- **Authentication**: Farcaster MiniKit SDK
+- **Payments**: Base x402 Micro-transaction Protocol
+- **AI**: OpenAI GPT-4 API
+- **Deployment**: Base L2 for low-fee transactions
 
-## Getting Started
+## 📦 Installation
 
-1. Install dependencies:
-```bash
-npm install
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/vistara-apps/c4f3cff8-c328-4f09-bb2c-f19f7937fdc5.git
+   cd momentum
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Fill in the required environment variables:
+   - `OPENAI_API_KEY`: Your OpenAI API key
+   - `NEXT_PUBLIC_ONCHAINKIT_API_KEY`: OnchainKit API key
+   - `REDIS_URL`: Redis database URL
+   - `PAYMENT_RECIPIENT_ADDRESS`: Ethereum address for payments
+
+4. **Start Redis** (if running locally)
+   ```bash
+   redis-server
+   ```
+
+5. **Seed the database** (optional)
+   ```bash
+   curl -X POST http://localhost:3000/api/seed
+   ```
+
+6. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+7. **Open your browser** to [http://localhost:3000](http://localhost:3000)
+
+## 🎯 Usage
+
+### First-Time Setup
+1. **Onboarding**: Users sign in with Farcaster and set up their goals
+2. **Goal Selection**: Choose from categories (Launch, Learn, Create, Social) or add custom goals
+3. **Timezone Setup**: Configure notification preferences
+4. **Mood Baseline**: Initial mood check-in to calibrate the AI
+
+### Daily Flow
+1. **Receive Nudges**: Get personalized motivation based on mood, goals, and time
+2. **Log Progress**: Mark goals as completed or in progress
+3. **Share Wins**: Post achievements to accountability pod
+4. **React to Peers**: Support other pod members with emoji reactions
+
+### Premium Features
+- **Streak Unlocks**: Earn premium content by maintaining consistency
+- **Micro-Payments**: Purchase additional content packs (0.0005 ETH)
+- **Pod Upgrades**: Access curated high-engagement pods
+
+## 🏗️ Architecture
+
+### Data Models
+- **User**: Profile, streaks, premium unlocks, timezone
+- **Goal**: User objectives with progress tracking
+- **Pod**: Accountability groups with member management
+- **MoodCheckIn**: Emotional state logging
+- **ProgressLog**: Goal advancement tracking
+- **WinShare**: Social sharing within pods
+- **MotivationContent**: AI-generated and static content library
+
+### API Endpoints
+- `/api/users`: User management
+- `/api/goals`: Goal CRUD operations
+- `/api/pods`: Pod matching and management
+- `/api/mood`: Mood check-in logging
+- `/api/progress`: Progress tracking
+- `/api/wins`: Win sharing functionality
+- `/api/generate-nudge`: AI-powered nudge generation
+- `/api/notifications`: Push notification handling
+- `/api/purchase`: Payment processing
+
+### Key Components
+- **FrameShell**: Base layout container
+- **StreakCounter**: Visual streak display
+- **MoodSelector**: 5-emoji mood interface
+- **NudgeCard**: Motivation content display
+- **GoalProgress**: Goal tracking interface
+- **PodFeed**: Social feed for pods
+- **ActionBar**: Bottom navigation
+
+## 🔧 Development
+
+### Project Structure
+```
+├── app/                    # Next.js app directory
+│   ├── api/               # API routes
+│   ├── components/        # React components
+│   ├── goals/            # Goals page
+│   ├── onboarding/       # Onboarding flow
+│   ├── pod/              # Pod page
+│   └── settings/         # Settings page
+├── lib/                   # Utility libraries
+│   ├── auth.ts           # Farcaster authentication
+│   ├── redis.ts          # Database operations
+│   ├── openai.ts         # AI integration
+│   ├── payments.ts       # Micro-transaction handling
+│   └── notifications.ts  # Push notification system
+└── hooks/                # Custom React hooks
 ```
 
-2. Set up environment variables:
-```bash
-cp .env.local.example .env.local
-# Add your API keys
-```
+### Available Scripts
+- `npm run dev`: Start development server
+- `npm run build`: Build for production
+- `npm run start`: Start production server
+- `npm run lint`: Run ESLint
 
-3. Run development server:
-```bash
-npm run dev
-```
+## 🚀 Deployment
 
-4. Open [http://localhost:3000](http://localhost:3000)
+### Prerequisites
+- Node.js 18+
+- Redis database
+- OpenAI API key
+- OnchainKit API key
 
-## Design System
+### Build & Deploy
+1. **Build the application**
+   ```bash
+   npm run build
+   ```
 
-### Colors
-- **Primary**: Purple gradient (hsl(262, 83%, 58%))
-- **Accent**: Green (hsl(142, 76%, 36%))
-- **Background**: Dark (hsl(240, 10%, 4%))
+2. **Deploy to your hosting platform** (Vercel, Netlify, etc.)
 
-### Components
-- `FrameShell`: Main container with gradient background
-- `StreakCounter`: Displays current streak with flame icon
-- `MoodSelector`: 5-emoji mood check-in interface
-- `NudgeCard`: Motivational message display
-- `GoalProgress`: Visual goal tracking cards
-- `PodFeed`: Accountability group activity feed
-- `ActionBar`: Bottom navigation
+3. **Set environment variables** in your deployment platform
 
-## Deployment
+4. **Seed the database** (if needed)
+   ```bash
+   curl -X POST https://your-domain.com/api/seed
+   ```
 
-Deploy to Vercel:
+## 🤝 Contributing
 
-```bash
-npm run build
-vercel deploy
-```
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## License
+## 📄 License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built for the Farcaster ecosystem
+- Powered by Base L2 for micro-transactions
+- AI content generation by OpenAI
+- UI inspiration from modern mobile apps
+
+## 📞 Support
+
+For support, please open an issue on GitHub or reach out on Farcaster.
+
+---
+
+**Momentum** - Your pocket cheerleader for consistent growth. 🌟
+
